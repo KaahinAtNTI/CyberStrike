@@ -1,0 +1,30 @@
+name: CyberStrike
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install Unity
+      uses: game-ci/setup-unity@v1
+      with:
+        unityVersion: 2019.4.10f1  # Adjust to your Unity version
+
+    - name: Build Unity Project
+      run: |
+        mkdir Build
+        unity -quit -batchmode -projectPath . -executeMethod BuildScript.PerformBuild -logFile build.log
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: CyberStrikeExe
+        path: Build/
