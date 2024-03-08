@@ -18,13 +18,6 @@ jobs:
       with:
         path: 'main-repo'
 
-    - name: Checkout remote Unity project repository
-      uses: actions/checkout@v2
-      with:
-        repository: 'username/unity-project-repo'
-        token: ${{ secrets.MY_GITHUB_TOKEN }}
-        path: 'unity-project'
-
     - name: Setup Unity Environment
       uses: game-ci/unity-builder@v2
       with:
