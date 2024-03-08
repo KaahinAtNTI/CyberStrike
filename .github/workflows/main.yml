@@ -15,13 +15,15 @@ jobs:
 
     - name: Install Unity
       run: |
-        wget -nv https://download.unity3d.com/download_unity/2019.4.10f1/UnitySetup-Linux-IL2CPP-2019.4.10f1.sh -O UnitySetup.sh
-        sudo chmod +x UnitySetup.sh
-        sudo ./UnitySetup.sh --unattended --install-location=/opt/Unity --components=Unity,Windows-Mono,Windows-IL2CPP
+        sudo apt-get install gpg
+        sudo apt-get install libarchive13
+        wget -q -O unity-installer https://public-cdn.cloud.unity3d.com/hub/prod/UnityHub.AppImage
+        chmod +x unity-installer
+        ./unity-installer --headless --install-location=/opt/Unity --components=Unity,Windows-Mono
 
-    - name: Activate License (optional)
+    - name: Activate Unity
       run: |
-        echo "This step is optional. If you have a Unity license, you can activate it here."
+        ./unity-installer --username=$UNITY_EMAIL --password=$UNITY_PASSWORD --license accept
 
     - name: Build Unity Project
       run: |
@@ -31,5 +33,5 @@ jobs:
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: CyberStrike
+        name: UnityBuild
         path: Build/
