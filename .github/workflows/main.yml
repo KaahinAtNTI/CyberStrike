@@ -21,12 +21,6 @@ jobs:
           restore-keys: |
             Library-
 
-      # Setup Unity
-      - name: Setup Unity
-        uses: game-ci/unity-setup@v4
-        with:
-          unityVersion: '2022.3.19f1'  
-
       # Test
       - name: Run tests
         uses: game-ci/unity-test-runner@v4
